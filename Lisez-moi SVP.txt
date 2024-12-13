@@ -1,0 +1,5 @@
+-> Pour installer les bibliothèques nécessaires exécuter le fichier .bat
+-> ajuster les paramètres du compte MetaMask dans le code
+-> ajuster les param du BD MySQL, et ajouter les tables
+
+ 

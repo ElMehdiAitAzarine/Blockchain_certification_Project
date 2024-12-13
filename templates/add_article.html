@@ -1,0 +1,30 @@
+ {% extends 'layout.html' %}
+
+ {% block body %}
+   <h1>Add demande</h1>
+   
+   {% from "includes/_formhelpers.html" import render_field %}
+   
+   <form method="POST" action="">
+   
+    <div class="form-group">
+        {{ render_field(form.firstname, class_="form-control") }}
+    </div>
+    
+    <div class="form-group">
+        {{ render_field(form.lastname, class_="form-control") }}
+    </div>
+
+    <div class="form-group">
+        {{ render_field(form.CIN, class_="form-control") }}
+    </div>
+
+    <div class="form-group" style="margin-top: 20px;margin-bottom: 20px; font-size: large;font-weight: bold;">
+        En confirmant votre demande, vous déclarez sur l'honneur que vous n'exercez aucune activité professionnelle.
+    </div>
+    
+    <p><input class="btn btn-primary" type="submit" value="Submit"></p>
+
+   </form>
+
+{% endblock %}

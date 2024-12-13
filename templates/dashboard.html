@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h1>Dashboard<p>Welcome {{session.username}}</p></h1>
+<a class="btn btn-success" href="/add_article"> Ajouter un Article</a>
+<hr>
+<table class="table table-striped">
+    <tr>
+        <td>ID</td>
+        <th>firstname</th>
+        <th>Lastname</th>
+        <th>CIN</th>
+        <th>Create_date</th>
+        <th></th>
+    </tr>    
+    {% for article in articles %}
+    <tr>
+        <td>{{article.id}}</td>
+        <td>{{article.firstname}}</td>
+        <td>{{article.lastname}}</td>
+        <td>{{article.CIN}}</td>
+        <td>{{article.create_date}}</td>
+        <td class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary me-md-2 pull-right" onclick="confirmCertificate('{{ article.firstname }}', '{{ article.lastname }}', '{{ article.CIN }}', '{{ article.create_date }}', this)">Confirmer</button>
+            <form action="{{url_for('delete_article', id=article.id)}}" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="submit" value="Delete" class="btn btn-danger">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script>
+    function confirmCertificate(firstname, lastname, CIN, current_date, btn) {
+        fetch('/create_certificate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ firstname: firstname, lastname: lastname, CIN: CIN, current_date: current_date })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "Certificate created") {
+                btn.innerText = "Confirmed";
+                btn.className = "btn btn-success me-md-2 pull-right";
+            } else {
+                alert("An error occurred while creating the certificate.");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+{% endblock %}
